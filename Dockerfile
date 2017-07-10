@@ -1,6 +1,7 @@
 FROM openjdk:8-jdk-stretch
 
 RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y build-essential python-dev libmysqlclient-dev libffi-dev && rm -rf /var/lib/apt/lists/*
 
 ARG user=jenkins
 ARG group=jenkins
@@ -59,6 +60,9 @@ ENV JENKINS_UC https://updates.jenkins.io
 ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
 ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
+
+# Install Docker for docker pulls/pushes
+RUN curl -sSL https://get.docker.com/ | sh
 
 # for main web interface:
 EXPOSE ${http_port}
