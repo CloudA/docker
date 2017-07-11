@@ -62,7 +62,7 @@ ENV JENKINS_INCREMENTALS_REPO_MIRROR=https://repo.jenkins-ci.org/incrementals
 RUN chown -R ${user} "$JENKINS_HOME" /usr/share/jenkins/ref
 
 # Install Docker for docker pulls/pushes
-RUN curl -sSL https://get.docker.com/ | sh
+RUN curl -sSL https://get.docker.com/ | sed 's/docker-ce/docker-ce=1.22/' | sh
 
 # for main web interface:
 EXPOSE ${http_port}
